@@ -10,8 +10,12 @@ export class UsersService {
 
     }
 
-    create(user:CreateUserDto){
+    register(user:CreateUserDto){
         const newUser = this.userRepository.create(user)
         return this.userRepository.save(newUser)
+    }
+
+    findAll(){
+        return this.userRepository.find()
     }
 }

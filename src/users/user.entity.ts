@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { hash } from "bcrypt";
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name:"users"})
 export class User{
@@ -29,6 +30,13 @@ export class User{
 
     @Column({type:'datetime',default:()=>"CURRENT_TIMESTAMP"})
     created_add:Date
+
+
+    @BeforeInsert()
+    async hashPassword(){
+        this.password = await hash(this.password , Number(process.env.HASH_SALT))
+
+    }
 
 
 }
