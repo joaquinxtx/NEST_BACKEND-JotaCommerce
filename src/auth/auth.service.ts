@@ -29,7 +29,16 @@ export class AuthService {
 
 
         const newUser = this.userRepository.create(user)
-        return this.userRepository.save(newUser)
+        const userSaved = await this.userRepository.save(newUser)
+
+        const payload = {id: userSaved.id , name:userSaved.name}
+        const token = this.jwtServise.sign(payload)
+        const data = {
+            user:userSaved,
+            token:"Bearer " + token
+        }
+        delete data.user.password
+        return data 
     }
 
 
@@ -52,8 +61,10 @@ export class AuthService {
         const token = this.jwtServise.sign(payload)
         const data = {
             user:userFound,
-            token:token
+            token:"Bearer " + token
         }
+
+        delete data.user.password
 
         return data
 
