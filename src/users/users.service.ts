@@ -5,11 +5,13 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from 'src/auth/dto/update-user.dto';
 import storage = require('../utils/cloud_storage');
+import { Rol } from 'src/roles/rol.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+   
   ) {}
 
   register(user: CreateUserDto) {
@@ -18,7 +20,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({relations:["roles"]});
   }
 
   async update(id: number, user: UpdateUserDto) {
