@@ -27,7 +27,7 @@ export class UsersService {
     const userFound = await this.userRepository.findOneBy({ id: id });
 
     if (!userFound) {
-      return new HttpException('usuario no existe', HttpStatus.NOT_FOUND);
+      throw new HttpException('usuario no existe', HttpStatus.NOT_FOUND);
     }
 
     const updateUser = Object.assign(userFound, user);
@@ -45,7 +45,7 @@ export class UsersService {
     console.log('URL ' + url);
 
     if (url === undefined && url === null) {
-      return new HttpException(
+      throw new HttpException(
         'la imagen no se pudo guardar',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
@@ -53,7 +53,7 @@ export class UsersService {
     const userFound = await this.userRepository.findOneBy({ id: id });
 
     if (!userFound) {
-      return new HttpException('usuario no existe', HttpStatus.NOT_FOUND);
+      throw new HttpException('usuario no existe', HttpStatus.NOT_FOUND);
     }
     user.image=url
     const updateUser = Object.assign(userFound, user);

@@ -101,6 +101,9 @@ export class AuthService {
 
     delete data.user.password;
 
+    
+    
+
     return data;
   }
 }
