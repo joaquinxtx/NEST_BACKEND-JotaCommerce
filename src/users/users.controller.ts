@@ -25,16 +25,17 @@ create(@Body() user:CreateUserDto){
 return this.usersServise.register(user)
 }
 
-@HasRoles(JwtRole.CLIENT)
+@HasRoles(JwtRole.CLIENT,JwtRole.ADMIN)
 @UseGuards(JwtAuthGuard, JwtRolesGuard)
 @Put(':id')
 update(@Param('id', ParseIntPipe )id:number, @Body() user:UpdateUserDto){
 return this.usersServise.update(id ,user)
 }
 
-@HasRoles(JwtRole.CLIENT)
-@UseGuards(JwtAuthGuard, JwtRolesGuard)
+@HasRoles(JwtRole.CLIENT,JwtRole.ADMIN)
+@UseGuards(JwtAuthGuard , JwtRolesGuard)
 @Post('upload/:id')
+
 @UseInterceptors(FileInterceptor('file'))
 updateWithImage(@UploadedFile( new ParseFilePipe({
     validators: [
