@@ -34,8 +34,7 @@ return this.usersServise.update(id ,user)
 
 @HasRoles(JwtRole.CLIENT,JwtRole.ADMIN)
 @UseGuards(JwtAuthGuard , JwtRolesGuard)
-@Post('upload/:id')
-
+@Put('upload/:id')
 @UseInterceptors(FileInterceptor('file'))
 updateWithImage(@UploadedFile( new ParseFilePipe({
     validators: [
