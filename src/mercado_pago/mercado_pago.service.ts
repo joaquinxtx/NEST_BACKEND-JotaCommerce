@@ -7,6 +7,8 @@ import { HEADERS_MERCADO_PAGO, MERCADO_PAGO_API } from 'src/config/config';
 import { Installment, PayerCost } from './models/Installments';
 import { CardTokenBody } from './models/card_token_body';
 import { CardTokenResponse } from './models/card_token_response';
+import { PaymentBody } from './models/payment_body';
+import { PaymentResponse } from './models/payment_response';
 
 @Injectable()
 export class MercadoPagoService {
@@ -59,5 +61,20 @@ export class MercadoPagoService {
         }),
       )
       .pipe(map((resp: AxiosResponse<CardTokenResponse>) => resp.data));
+  }
+  createPayment(paymentBody:PaymentBody): Observable<PaymentResponse> {
+    return this.httpService
+      .post(
+        MERCADO_PAGO_API +
+          `/payments`,
+          paymentBody,
+        { headers: HEADERS_MERCADO_PAGO },
+      )
+      .pipe(
+        catchError((error: AxiosError) => {
+          throw new HttpException(error.response.data, error.response.status);
+        }),
+      )
+      .pipe(map((resp: AxiosResponse<PaymentResponse>) => resp.data));
   }
 }
