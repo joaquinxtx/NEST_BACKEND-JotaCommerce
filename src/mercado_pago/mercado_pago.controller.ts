@@ -30,8 +30,8 @@ export class MercadoPagoController {
   @UseGuards(JwtAuthGuard, JwtRolesGuard)
   @Get('installments/:first_six_digits/:amount')
   getInstallments(
-    @Param('first_six_digits', ParseIntPipe) firstSixtDigits: number,
-    @Param('amount', ParseIntPipe) amount: number,
+    @Param('first_six_digits') firstSixtDigits: number,
+    @Param('amount') amount: number,
   ) {
     return this.mercadoPagoService.getInstallments(firstSixtDigits,amount);
   }

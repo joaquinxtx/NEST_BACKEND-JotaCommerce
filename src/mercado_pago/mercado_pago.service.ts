@@ -71,6 +71,7 @@ export class MercadoPagoService {
         { headers: HEADERS_MERCADO_PAGO },
       )
       .pipe(
+        
         catchError((error: AxiosError) => {
           throw new HttpException(error.response.data, error.response.status);
         }),
