@@ -30,7 +30,7 @@ export class MercadoPagoService {
   getInstallments(
     firstSixDigits: number,
     amount: number,
-  ): Observable<PayerCost[]> {
+  ): Observable<Installment> {
     return this.httpService
       .get(
         MERCADO_PAGO_API +
@@ -42,9 +42,7 @@ export class MercadoPagoService {
           throw new HttpException(error.response.data, error.response.status);
         }),
       )
-      .pipe(
-        map((resp: AxiosResponse<Installment[]>) => resp.data[0].payer_costs),
-      );
+      .pipe(map((resp: AxiosResponse<Installment>) => resp.data[0]));
   }
 
   createCardToken(cardTokenBody: CardTokenBody): Observable<CardTokenResponse> {
@@ -52,7 +50,7 @@ export class MercadoPagoService {
       .post(
         MERCADO_PAGO_API +
           `/card_tokens?public_key=TEST-1d9d033d-058e-41b4-a480-b7e852284c0b`,
-          cardTokenBody,
+        cardTokenBody,
         { headers: HEADERS_MERCADO_PAGO },
       )
       .pipe(
@@ -62,16 +60,12 @@ export class MercadoPagoService {
       )
       .pipe(map((resp: AxiosResponse<CardTokenResponse>) => resp.data));
   }
-  createPayment(paymentBody:PaymentBody): Observable<PaymentResponse> {
+  createPayment(paymentBody: PaymentBody): Observable<PaymentResponse> {
     return this.httpService
-      .post(
-        MERCADO_PAGO_API +
-          `/payments`,
-          paymentBody,
-        { headers: HEADERS_MERCADO_PAGO },
-      )
+      .post(MERCADO_PAGO_API + `/payments`, paymentBody, {
+        headers: HEADERS_MERCADO_PAGO,
+      })
       .pipe(
-        
         catchError((error: AxiosError) => {
           throw new HttpException(error.response.data, error.response.status);
         }),

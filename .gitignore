@@ -27,6 +27,8 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
+src/mercado_pago/j.js
+src/mercado_pago/java.js
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

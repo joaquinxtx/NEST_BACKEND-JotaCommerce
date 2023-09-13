@@ -27,14 +27,17 @@ export class MercadoPagoController {
   }
 
   @HasRoles(JwtRole.ADMIN, JwtRole.CLIENT)
-  @UseGuards(JwtAuthGuard, JwtRolesGuard)
-  @Get('installments/:first_six_digits/:amount')
-  getInstallments(
-    @Param('first_six_digits') firstSixtDigits: number,
-    @Param('amount') amount: number,
-  ) {
-    return this.mercadoPagoService.getInstallments(firstSixtDigits,amount);
-  }
+    @UseGuards(JwtAuthGuard, JwtRolesGuard)
+    @Get('installments/:first_six_digits/:amount')
+    getInstallments(
+        @Param('first_six_digits') firstSixDigits: number, 
+        @Param('amount') amount: number
+    ) {
+        console.log('firstSixDigits', firstSixDigits);
+        console.log('amount', amount);
+        
+        return this.mercadoPagoService.getInstallments(firstSixDigits, amount);
+    }
 
   @HasRoles(JwtRole.ADMIN, JwtRole.CLIENT)
   @UseGuards(JwtAuthGuard, JwtRolesGuard)
